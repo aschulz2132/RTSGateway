@@ -791,7 +791,7 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
         return LGW_GPS_SUCCESS;
     } else {
         /* only 1 or 2 successive aberrant values -> ignore and return an error */
-	fprintf("#alice message#: sync failed");
+	printf("#alice message#: sync failed");
         aber_min2 = aber_min1;
         aber_min1 = aber_n0;
         return LGW_GPS_ERROR;
