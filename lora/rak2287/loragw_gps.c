@@ -748,13 +748,13 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
     if (utc_diff != 0) { // prevent divide by zero
         slope = cnt_diff/utc_diff;
         if ((slope > PLUS_10PPM) || (slope < MINUS_10PPM)) {
-            DEBUG_MSG("Warning: correction range exceeded\n");
+            fprintf("LGW_GPS_Sync Warning: correction range exceeded\n");
             aber_n0 = true;
         } else {
             aber_n0 = false;
         }
     } else {
-        DEBUG_MSG("Warning: aberrant UTC value for synchronization\n");
+        fprintf("LGW_GPS_Sync Warning: aberrant UTC value for synchronization\n");
         aber_n0 = true;
     }
 
@@ -762,7 +762,7 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
     if (aber_n0 == false) {
         /* value no aberrant -> sync with smoothed slope */
         ref->systime = time(NULL);
-	fprint("#alice message#: the concentrator and gps synced, system time: %ld\n",ref.systime);
+	fprintf("#alice message#: the concentrator and gps synced, system time: %ld\n",ref.systime);
         ref->count_us = count_us;
         ref->utc.tv_sec = utc.tv_sec;
         ref->utc.tv_nsec = utc.tv_nsec;
@@ -775,7 +775,7 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
     } else if (aber_n0 && aber_min1 && aber_min2) {
         /* 3 successive aberrant values -> sync reset (keep xtal_err) */
         ref->systime = time(NULL);
-	
+	fprintf("#alice message#: the concentrator and gps sync reset, system time: %ld\n",ref.systime);
         ref->count_us = count_us;
         ref->utc.tv_sec = utc.tv_sec;
         ref->utc.tv_nsec = utc.tv_nsec;
@@ -791,6 +791,7 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
         return LGW_GPS_SUCCESS;
     } else {
         /* only 1 or 2 successive aberrant values -> ignore and return an error */
+	fprintf("#alice message#: sync failed");
         aber_min2 = aber_min1;
         aber_min1 = aber_n0;
         return LGW_GPS_ERROR;
