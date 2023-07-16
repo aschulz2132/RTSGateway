@@ -3420,6 +3420,7 @@ static void gps_process_sync(void) {
     /* try to update time reference with the new GPS time & timestamp */
     pthread_mutex_lock(&mx_timeref);
     i = lgw_gps_sync(&time_reference_gps, trig_tstamp, utc, gps_time);
+    fprintf("#alice message#: lgw_gps_sync() ran \n");
     modify_os_time(trig_tstamp);
     pthread_mutex_unlock(&mx_timeref);
     if (i != LGW_GPS_SUCCESS) {
@@ -3578,12 +3579,18 @@ void thread_valid(void) {
         gps_ref_age = (long)difftime(time(NULL), time_reference_gps.systime);
         if ((gps_ref_age >= 0) && (gps_ref_age <= GPS_REF_MAX_AGE)) {
             /* time ref is ok, validate and  */
+            fprintf("#alice message#: time ref is ok:\n");
+            
             gps_ref_valid = true;
             ref_valid_local = true;
             xtal_err_cpy = time_reference_gps.xtal_err;
             //printf("XTAL err: %.15lf (1/XTAL_err:%.15lf)\n", xtal_err_cpy, 1/xtal_err_cpy); // DEBUG
         } else {
             /* time ref is too old, invalidate */
+            fprintf("#alice message#: timm ref is too old\n");
+         fprintf("#alice message#: system time: %li \n",time(NULL));
+         fprintf("#alice message#: time_reference_gps.systime: %li \n",time_reference_gps.systime);
+         
             gps_ref_valid = false;
             ref_valid_local = false;
         }
