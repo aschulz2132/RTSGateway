@@ -3,7 +3,7 @@
 LIBLORAGW_VERSION := `cat ../VERSION`
 include library.cfg
 include ../target.cfg
-
+DEBUG_BEACON = 1;
 ### constant symbols
 
 ARCH ?=
