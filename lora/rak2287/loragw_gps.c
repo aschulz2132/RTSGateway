@@ -762,7 +762,7 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
     if (aber_n0 == false) {
         /* value no aberrant -> sync with smoothed slope */
         ref->systime = time(NULL);
-	fprintf("#alice message#: the concentrator and gps synced, system time: %ld\n",ref.systime);
+	fprintf("#alice message#: the concentrator and gps synced, system time: %li \n",ref.systime);
         ref->count_us = count_us;
         ref->utc.tv_sec = utc.tv_sec;
         ref->utc.tv_nsec = utc.tv_nsec;
@@ -775,7 +775,7 @@ int lgw_gps_sync(struct tref *ref, uint32_t count_us, struct timespec utc, struc
     } else if (aber_n0 && aber_min1 && aber_min2) {
         /* 3 successive aberrant values -> sync reset (keep xtal_err) */
         ref->systime = time(NULL);
-	fprintf("#alice message#: the concentrator and gps sync reset, system time: %ld\n",ref.systime);
+	fprintf("#alice message#: the concentrator and gps sync reset, system time: %li \n",ref.systime);
         ref->count_us = count_us;
         ref->utc.tv_sec = utc.tv_sec;
         ref->utc.tv_nsec = utc.tv_nsec;
