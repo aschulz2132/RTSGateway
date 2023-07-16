@@ -3487,11 +3487,11 @@ void thread_gps(void) {
 
                 if (frame_size > 0) {
                     if (latest_msg == INCOMPLETE) {
-                        /* UBX header found but frame appears to be missing bytes */
+                        printf("#alice message# UBX header found but frame appears to be missing bytes \n");
                         frame_size = 0;
                     } else if (latest_msg == INVALID) {
                         /* message header received but message appears to be corrupted */
-                        MSG("WARNING: [gps] could not get a valid message from GPS (no time)\n");
+                        print("#alice message#: [gps] could not get a valid message from GPS (corrupted) (no time)\n");
                         frame_size = 0;
                     } else if (latest_msg == UBX_NAV_TIMEGPS) {
                         gps_process_sync();
