@@ -3491,7 +3491,7 @@ void thread_gps(void) {
                         frame_size = 0;
                     } else if (latest_msg == INVALID) {
                         /* message header received but message appears to be corrupted */
-                        print("#alice message#: [gps] could not get a valid message from GPS (corrupted) (no time)\n");
+                        printf("#alice message#: [gps] could not get a valid message from GPS (corrupted) (no time)\n");
                         frame_size = 0;
                     } else if (latest_msg == UBX_NAV_TIMEGPS) {
                         gps_process_sync();
